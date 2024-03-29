@@ -11,7 +11,6 @@ import (
 	"go-blog-app/infra/redis"
 	"go-blog-app/internal/api/rest"
 	"go-blog-app/internal/api/rest/handlers"
-	"go-blog-app/internal/domain"
 	"go-blog-app/internal/helper"
 	"log"
 )
@@ -19,12 +18,7 @@ import (
 func StartServer(config config.AppConfig) {
 	app := fiber.New()
 
-	db, err := postgresql.ConnectPostgres(config)
-
-	err = db.AutoMigrate(&domain.User{}, &domain.Article{})
-	if err != nil {
-		return
-	}
+	db := postgresql.ConnectPostgres(config)
 
 	rdsDB := redis.ConnectRedis(config)
 
