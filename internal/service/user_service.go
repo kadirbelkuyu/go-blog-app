@@ -38,11 +38,21 @@ func (s UserService) Signup(input dto.UserSignup) (string, error) {
 		return "", err
 	}
 
+	_, err = s.findUserByEmail(input.Email)
+	if err == nil {
+		return "", errors.New("user already exist with the provided email id")
+	}
+
+	if input.Role == "" {
+		input.Role = "author"
+	}
+
 	user, err := s.Repo.CreateUser(domain.User{
 		FirstName: input.FirstName,
 		LastName:  input.LastName,
 		Email:     input.Email,
 		Password:  hPassword,
+		Role:      input.Role,
 	})
 
 	notificationClient := notification.NewNotificationClient(s.Config)
