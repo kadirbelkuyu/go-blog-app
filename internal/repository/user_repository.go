@@ -25,12 +25,13 @@ func NewUserRepository(db *sql.DB) UserRepository {
 }
 
 func (r userRepository) CreateUser(user domain.User) (domain.User, error) {
-	query := `INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4)`
-	_, err := r.db.Exec(query, user.FirstName, user.LastName, user.Email, user.Password)
+	query := `INSERT INTO users (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, $5) returning id`
+	err := r.db.QueryRow(query, user.FirstName, user.LastName, user.Email, user.Password, user.Role).Scan(&user.ID)
 	if err != nil {
 		log.Printf("create user error %v", err)
 		return domain.User{}, err
 	}
+
 	return user, nil
 }
 

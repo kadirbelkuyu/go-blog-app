@@ -60,7 +60,7 @@ func (h *UserHandler) Register(ctx *fiber.Ctx) error {
 
 	token, err := h.svc.Signup(user)
 	if err != nil {
-		return responses.NewErrorResponse(ctx, http.StatusBadRequest, "error on signup")
+		return responses.NewErrorResponse(ctx, http.StatusBadRequest, err.Error())
 	}
 
 	return responses.NewSuccessResponse(ctx, http.StatusOK, token)

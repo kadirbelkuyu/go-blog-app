@@ -9,6 +9,7 @@ type UserSignup struct {
 	UserLogin
 	FirstName string `json:"first_name,omitempty" validate:"required"`
 	LastName  string `json:"last_name,omitempty" validate:"required"`
+	Role      string `json:"role,omitempty"`
 }
 
 type ProfileInfo struct {
