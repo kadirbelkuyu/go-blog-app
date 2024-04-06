@@ -13,7 +13,8 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN go build -o service cmd/main.go
+RUN #go build -o service cmd/main.go
+RUN go build -v -o service cmd/main.go
 #RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-s -w" -o service cmd/common/main.go
 
 
