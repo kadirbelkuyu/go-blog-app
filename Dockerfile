@@ -19,7 +19,7 @@ RUN go build -v -o service cmd/main.go
 
 
 # Start a new stage from scratch #######
-FROM alpine:latest
+FROM alpine:3.23.3
 
 RUN apk --no-cache add ca-certificates
 
